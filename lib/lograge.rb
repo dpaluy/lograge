@@ -113,7 +113,8 @@ module Lograge
   end
 
   def self.setup(app)
-    app.config.action_dispatch.rack_cache[:verbose] = false if app.config.action_dispatch.rack_cache
+    app.config.action_dispatch.rack_cache[:verbose] = false if app.config.action_dispatch.rack_cache && 
+      app.config.action_dispatch.rack_cache.is_a?(Hash)
     require 'lograge/rails_ext/rack/logger'
     Lograge.remove_existing_log_subscriptions
     Lograge::RequestLogSubscriber.attach_to :action_controller
